@@ -1,0 +1,37 @@
+cmake_minimum_required(VERSION 3.16)
+project(apeq_bench_emp CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Inject the build provenance that validate.py checks. Release archives do not
+# contain .git, so build_image.sh supplies one shared source-tree digest.
+if(DEFINED BENCH_REVISION AND NOT BENCH_REVISION STREQUAL "")
+  set(GIT_SHA "${BENCH_REVISION}")
+else()
+  execute_process(COMMAND git rev-parse --short HEAD
+                  OUTPUT_VARIABLE GIT_SHA OUTPUT_STRIP_TRAILING_WHITESPACE
+                  ERROR_QUIET)
+  execute_process(COMMAND git diff --quiet
+                  RESULT_VARIABLE GIT_DIRTY ERROR_QUIET)
+  if(NOT GIT_SHA)
+    set(GIT_SHA "unknown")
+  elseif(NOT GIT_DIRTY EQUAL 0)
+    set(GIT_SHA "${GIT_SHA}-dirty")
+  endif()
+endif()
+add_definitions(-DGIT_COMMIT="${GIT_SHA}")
+
+# ISA flags MUST be identical across every image and for APEQ itself.
+# Comparing an AVX2 build against a generic one is not a fair comparison.
+set(APEQ_ISA_FLAGS -maes -msse4.1 -msse4.2 -mavx2 -mpclmul
+    CACHE STRING "ISA flags shared by all benchmark targets")
+add_compile_options(${APEQ_ISA_FLAGS} -O3 -Wno-deprecated-declarations)
+
+find_package(OpenSSL REQUIRED)
+find_package(Threads REQUIRED)
+find_path(EMP_TOOL_INC emp-tool/emp-tool.h)
+include_directories(${EMP_TOOL_INC} ${CMAKE_CURRENT_SOURCE_DIR})
+
+add_executable(driver emp_eq.cpp)
+target_link_libraries(driver emp-tool ${OPENSSL_LIBRARIES} Threads::Threads gmp gmpxx)

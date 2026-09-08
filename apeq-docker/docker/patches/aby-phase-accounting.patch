@@ -1,0 +1,25 @@
+diff --git a/src/abycore/aby/abyparty.cpp b/src/abycore/aby/abyparty.cpp
+--- a/src/abycore/aby/abyparty.cpp
++++ b/src/abycore/aby/abyparty.cpp
+@@ -234,6 +234,7 @@ void ABYParty::ExecCircuit() {
+ 		}
+ 
+ 	}
++	m_pSetup->FinishSetupPhase();
+ 	StopRecording("Time for setup phase: ", P_SETUP, m_vSockets);
+ 
+ #ifndef BATCH
+diff --git a/src/abycore/aby/abysetup.cpp b/src/abycore/aby/abysetup.cpp
+--- a/src/abycore/aby/abysetup.cpp
++++ b/src/abycore/aby/abysetup.cpp
+@@ -238,7 +238,9 @@ BOOL ABYSetup::PerformSetupPhase() {
+ }
+ 
+ BOOL ABYSetup::FinishSetupPhase() {
+-	//Do nothing atm
++	if(m_tSetupChan) {
++		m_tSetupChan->synchronize_end();
++	}
+ 	return true;
+ }
+ 

@@ -1,0 +1,20 @@
+# Minimal image used to verify the shared benchmark harness before building any
+# third-party MPC library. Build this image first. Alpine keeps the first pull
+# small; only the C++ compiler and its runtime are installed.
+FROM alpine:3.20
+
+RUN apk add --no-cache g++
+RUN apk add --no-cache iproute2
+
+ARG BENCH_REVISION=unknown
+WORKDIR /opt/bench
+
+COPY bench/mock_eq.cpp ./mock_eq.cpp
+COPY bench/driver_common.h ./driver_common.h
+COPY bench/csv_row.h ./csv_row.h
+
+RUN g++ -std=c++17 -O3 -pthread \
+        -DGIT_COMMIT=\"${BENCH_REVISION}\" \
+        mock_eq.cpp -o /opt/bench/driver
+
+ENTRYPOINT ["/opt/bench/driver"]

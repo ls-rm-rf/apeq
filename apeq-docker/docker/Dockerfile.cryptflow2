@@ -1,0 +1,75 @@
+# =============================================================================
+# CrypTFlow2 (EzPC/SCI) equality baseline
+#
+# The SCI library inside EzPC is the relevant component; the full EzPC compiler
+# is not needed and building it wastes time.
+#
+# Build:  docker build -t apeq/cryptflow2 -f Dockerfile.cryptflow2 .
+# =============================================================================
+
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=UTC
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        build-essential \
+        cmake \
+        git \
+        ca-certificates \
+        libgmp-dev \
+        libssl-dev \
+        libboost-all-dev \
+        libeigen3-dev \
+        python3 \
+        iproute2 \
+        tcpdump \
+        iputils-ping \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /opt
+
+ARG EZPC_REF=f24bf3e022dde3493cf0ffe3ebd92dd73936b734
+
+COPY patches/cryptflow2-seal-gcc11.patch /tmp/cryptflow2-seal-gcc11.patch
+COPY patches/cryptflow2-sci-recv-counter.patch /tmp/cryptflow2-sci-recv-counter.patch
+
+# Build ONLY the SCI subdirectory. The top-level build pulls in the ONNX
+# frontend and a Python toolchain that this benchmark does not use. The pinned
+# SEAL 3.3.2 predates GCC 11's stricter transitive-include behavior, so add its
+# missing <mutex> include before SCI configures it. SCI's stock NetIO counter
+# measures sends only; the second patch adds the receive-direction counter
+# required by the shared result schema.
+RUN git clone https://github.com/mpc-msri/EzPC.git \
+    && cd EzPC && git checkout ${EZPC_REF} \
+    && git apply /tmp/cryptflow2-sci-recv-counter.patch \
+    && grep -q "recv_counter" SCI/src/utils/net_io_channel.h \
+    && cd SCI \
+    && git submodule update --init --recursive extern/SEAL \
+    && git -C extern/SEAL apply ../../cmake/seal.patch \
+    && git -C extern/SEAL apply /tmp/cryptflow2-seal-gcc11.patch \
+    && mkdir build && cd build \
+    && cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF -DBUILD_NETWORKS=OFF \
+    && make -j"$(nproc)" && make install
+
+ARG BENCH_REVISION=unknown
+COPY bench/cryptflow2_eq.cpp /opt/bench/cryptflow2_eq.cpp
+COPY bench/CMakeLists.sci.txt /opt/bench/CMakeLists.txt
+COPY bench/driver_common.h /opt/bench/driver_common.h
+COPY bench/csv_row.h /opt/bench/csv_row.h
+
+RUN cd /opt/bench && cmake -DCMAKE_BUILD_TYPE=Release \
+        -DBENCH_REVISION="${BENCH_REVISION}" . && make -j"$(nproc)"
+
+ENV PATH="/opt/bench:${PATH}"
+
+ENTRYPOINT ["/opt/bench/driver"]
+
+# =============================================================================
+# MEASUREMENT NOTES
+#
+# SCI's IOPack exposes counters; use them. CrypTFlow2's base-OT setup dominates
+# at batch size 1, so the setup/online split matters more here than anywhere
+# else. Reporting only total time would make CrypTFlow2 look far worse than it
+# is at small batches, which is not a comparison we want to make.
+# =============================================================================

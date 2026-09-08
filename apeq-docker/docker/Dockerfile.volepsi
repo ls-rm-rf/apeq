@@ -1,0 +1,95 @@
+# =============================================================================
+# VOLE-PSI equality baseline (Rindal-Schoppmann OPRF layer)
+#
+# This image contains the volepsi_eq baseline and its installed libOTe
+# silent-VOLE dependency stack.  It is not, by itself, an APEQ backend; APEQ's
+# backend adapter and protocol integration remain separate build targets.
+#
+# Build:  docker build -t apeq/volepsi -f Dockerfile.volepsi .
+# =============================================================================
+
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=UTC
+
+RUN apt-get -o Acquire::Retries=5 update \
+    && apt-get -o Acquire::Retries=5 install -y --no-install-recommends \
+        build-essential \
+        cmake \
+        git \
+        ca-certificates \
+        libssl-dev \
+        libgmp-dev \
+        libtool \
+        autoconf \
+        automake \
+        pkg-config \
+        nasm \
+        python3 \
+        python3-pip \
+        iproute2 \
+        tcpdump \
+        iputils-ping \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /opt
+
+ARG VOLEPSI_REF=ed943f5f814591cdf864777c73b7bc9e7526c1a8
+ARG BUILD_JOBS=4
+
+COPY patches/volepsi-rsoprf-preprocess.patch /opt/patches/volepsi-rsoprf-preprocess.patch
+
+# volepsi uses its own dependency fetcher; this pinned revision's fetch scripts
+# pin libOTe, cryptoTools, sparsehash, coproto and their transitive sources.
+RUN git clone https://github.com/ladnir/volepsi.git \
+    && cd volepsi && git checkout ${VOLEPSI_REF} \
+    && git apply /opt/patches/volepsi-rsoprf-preprocess.patch \
+    && python3 build.py --par=${BUILD_JOBS} -DVOLE_PSI_ENABLE_BOOST=ON -DFETCH_AUTO=ON \
+        --install=/opt/volepsi-install \
+    && test -f /opt/volepsi-install/lib/cmake/volePSI/volePSIConfig.cmake \
+    && test -f /opt/volepsi-install/lib/libvolePSI.a
+
+ARG BENCH_REVISION=unknown
+COPY bench/volepsi_eq.cpp /opt/bench/volepsi_eq.cpp
+COPY bench/CMakeLists.volepsi.txt /opt/bench/CMakeLists.txt
+COPY bench/driver_common.h /opt/bench/driver_common.h
+COPY bench/csv_row.h /opt/bench/csv_row.h
+
+RUN cd /opt/bench && cmake -DCMAKE_BUILD_TYPE=Release \
+        -DBENCH_REVISION="${BENCH_REVISION}" \
+        -DCMAKE_PREFIX_PATH=/opt/volepsi-install . && make -j"${BUILD_JOBS}"
+
+ENV PATH="/opt/bench:${PATH}"
+
+ENTRYPOINT ["/opt/bench/driver"]
+
+# =============================================================================
+# KNOWN ISSUES AND WHAT TO TRY
+#
+# 1. coproto / macoro require C++20
+#    Set -DCMAKE_CXX_STANDARD=20. If the compiler is too old, use GCC 11+.
+#
+# 2. Dependency provenance
+#    This volepsi revision pins the dependency revisions in its CMake fetch
+#    scripts.  The post-build tests above also prevent build.py from masking a
+#    failed dependency build and continuing with an empty install prefix.
+#
+# 3. libOTe SSE/AVX detection
+#    Same ISA caveat as EMP: use identical ISA flags across all images.
+#
+# NOTE ON WHAT THIS BASELINE MEASURES
+#
+# volepsi implements set intersection, not a standalone batch equality with
+# one-sided output. Two honest options:
+#
+#   (a) run PSI on t singleton sets and report it as-is, stating clearly that
+#       the functionality differs and that the comparison is indicative; or
+#   (b) extract the OPRF layer and build a direct equality test from it.
+#
+# (b) is the fairer comparison and is what the paper should use. Whichever is
+# chosen, say so explicitly in the evaluation section -- the previous version of
+# this work compared against protocols with a different output convention
+# (secret-shared vs plaintext) without noting it, and that is exactly the kind
+# of thing a reviewer will catch.
+# =============================================================================

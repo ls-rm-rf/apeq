@@ -1,0 +1,113 @@
+# =============================================================================
+# EMP-toolkit equality baseline
+#
+# VERIFIED SMOKE BUILD. The pinned sources, receive-counter patch and driver
+# completed a two-party LAN smoke cell on 2026-08-28. This is not yet a full
+# experiment matrix. Record every change in CHANGELOG-baselines.md.
+#
+# Build:  docker build -t apeq/emp -f Dockerfile.emp .
+# Run:    docker run --rm --network host apeq/emp /opt/bench/emp_eq --party 1 ...
+# =============================================================================
+
+# Ubuntu 22.04, not 24.04: EMP's dependency chain has known friction with the
+# newer OpenSSL 3.x defaults and GCC 13's stricter headers. Pin deliberately.
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=UTC
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        build-essential \
+        cmake \
+        git \
+        ca-certificates \
+        libssl-dev \
+        libgmp-dev \
+        libboost-all-dev \
+        python3 \
+        python3-pip \
+        iproute2 \
+        tcpdump \
+        iputils-ping \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /opt
+
+# --- EMP components -----------------------------------------------------------
+# emp-tool -> emp-ot -> emp-sh2pc, built in that order; each installs headers
+# the next one needs.
+#
+# Exact revisions are pinned; record these commits in the paper's
+# implementation section if they are the revisions used for final results.
+ARG EMP_TOOL_REF=11093a7d2160e7e7a4dcae3ffd9e6935bf2b8c1c
+ARG EMP_OT_REF=52b32c8371c09c1567e3d650c0f0adfbb229a270
+ARG EMP_SH2PC_REF=1fd0101e77c1dc008ab07288ec49c62fa0c5546c
+
+COPY patches/emp-tool-0.3.0-recv-counter.patch /tmp/emp-tool-recv-counter.patch
+
+RUN git clone https://github.com/emp-toolkit/emp-tool.git \
+    && cd emp-tool && git checkout ${EMP_TOOL_REF} \
+    && git apply /tmp/emp-tool-recv-counter.patch \
+    && cmake -DCMAKE_BUILD_TYPE=Release . \
+    && make -j"$(nproc)" && make install && ldconfig
+
+RUN git clone https://github.com/emp-toolkit/emp-ot.git \
+    && cd emp-ot && git checkout ${EMP_OT_REF} \
+    && cmake -DCMAKE_BUILD_TYPE=Release . \
+    && make -j"$(nproc)" && make install && ldconfig
+
+RUN git clone https://github.com/emp-toolkit/emp-sh2pc.git \
+    && cd emp-sh2pc && git checkout ${EMP_SH2PC_REF} \
+    && cmake -DCMAKE_BUILD_TYPE=Release . \
+    && make -j"$(nproc)" && make install && ldconfig
+
+# --- benchmark driver ---------------------------------------------------------
+ARG BENCH_REVISION=unknown
+COPY bench/emp_eq.cpp /opt/bench/emp_eq.cpp
+COPY bench/CMakeLists.emp.txt /opt/bench/CMakeLists.txt
+COPY bench/driver_common.h /opt/bench/driver_common.h
+COPY bench/csv_row.h /opt/bench/csv_row.h
+COPY bench/counting_io.h /opt/bench/counting_io.h
+
+RUN cd /opt/bench && cmake -DCMAKE_BUILD_TYPE=Release \
+        -DBENCH_REVISION="${BENCH_REVISION}" . && make -j"$(nproc)"
+
+ENV PATH="/opt/bench:${PATH}"
+
+ENTRYPOINT ["/opt/bench/driver"]
+
+# =============================================================================
+# KNOWN ISSUES AND WHAT TO TRY
+#
+# 1. "error: 'uint64_t' does not name a type"
+#    Old EMP headers omit <cstdint>. Either take a newer commit or add
+#    -include cstdint to CMAKE_CXX_FLAGS.
+#
+# 2. OpenSSL 3.x deprecation warnings escalated to errors
+#    Add -Wno-deprecated-declarations. Do not switch to OpenSSL 1.1 unless the
+#    build genuinely requires it; note the version in the paper either way.
+#
+# 3. Illegal instruction at runtime
+#    EMP compiles with -maes -msse4 -mavx2 by default. If the benchmark host
+#    differs from the build host, build with -march=native OFF and set the ISA
+#    flags explicitly. Whatever you choose, use the SAME flags for every
+#    baseline and for APEQ, and state them in the paper. Comparing an AVX2
+#    build against a generic one is not a fair comparison.
+#
+# 4. emp-ot's Ferret writes a large pre-generated correlation file on first use
+#    That write belongs to setup_ms, not online_ms. Make sure the driver's
+#    timers bracket it correctly, and that a warm-up run does not silently
+#    amortise it away across repetitions.
+#
+# 5. Boost is pulled in as libboost-all-dev, which is heavy
+#    Narrow it once the build is green; it is not worth debugging up front.
+#
+# MEASUREMENT NOTES
+#
+# EMP 0.3 exposes a send counter. The Docker build applies the small audited
+# patch in patches/ to add the symmetric receive counter. Cross-check both
+# directions against tcpdump once before publication.
+#
+# Report the equality circuit only. Do not reuse a comparison circuit and
+# subtract; the circuits differ and the substitution would overstate EMP's cost.
+# =============================================================================
