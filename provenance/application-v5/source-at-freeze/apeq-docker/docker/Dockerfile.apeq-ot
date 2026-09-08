@@ -1,0 +1,13 @@
+FROM apeq/ips-ole-libote:latest
+WORKDIR /opt/bench
+COPY bench/apeq_ot_eq.cpp /opt/bench/apeq_eq.cpp
+COPY bench/CMakeLists.apeq.txt /opt/bench/CMakeLists.txt
+COPY bench/driver_common.h /opt/bench/driver_common.h
+COPY bench/csv_row.h /opt/bench/csv_row.h
+ARG BENCH_REVISION=unknown
+RUN cmake -S /opt/bench -B /opt/bench/build \
+      -DCMAKE_BUILD_TYPE=Release -DBENCH_REVISION="${BENCH_REVISION}" \
+      -DCMAKE_PREFIX_PATH=/opt/volepsi-install \
+    && cmake --build /opt/bench/build --parallel 4 \
+    && cp /opt/bench/build/driver /opt/bench/driver
+ENTRYPOINT ["/opt/bench/driver"]

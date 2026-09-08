@@ -1,0 +1,70 @@
+{
+  "frozen_utc": "2026-09-08T04:15:05Z",
+  "experiment": "E1",
+  "runs": 240,
+  "repeats": 10,
+  "batch_sizes": [
+    100,
+    1000,
+    10000
+  ],
+  "input_bits": 64,
+  "backends": {
+    "bit_ot": {
+      "target": "apeq-ot",
+      "protocol": "apeq",
+      "backend": "bit_ot",
+      "variant": "ole",
+      "field": 127
+    },
+    "vole_hash": {
+      "target": "apeq-vole",
+      "protocol": "apeq",
+      "backend": "ferret_vole",
+      "variant": "vole_hash",
+      "field": 128
+    },
+    "lu": {
+      "target": "lu",
+      "protocol": "lu_eq",
+      "backend": "n/a",
+      "variant": "n/a",
+      "field": 128
+    },
+    "aby_yao": {
+      "target": "aby",
+      "protocol": "aby_eq",
+      "backend": "n/a",
+      "variant": "yao",
+      "field": 128
+    }
+  },
+  "expected_source_revision": "tree-2606d821ba4e",
+  "networks": {
+    "lan": {
+      "one_way_ms": 0.25,
+      "rate_mbps": 1000
+    },
+    "wan": {
+      "one_way_ms": 40,
+      "rate_mbps": 100
+    }
+  },
+  "schedule_seed": "0x56354531",
+  "cpu_set": "0-9",
+  "timeout_per_pair_seconds": 600,
+  "dataset": "controlled synthetic aligned uint64 integer identifiers",
+  "values": "OS entropy; no input-generating seed in public configuration",
+  "sharing": "same frozen values across all backends and networks at each batch/rep",
+  "primary_latency": "B local input read through result file close; process startup excluded",
+  "other_latency": "A local latency includes waiting for B; protocol phases reported separately",
+  "io": "warm host cache possible; output close included, fsync not performed",
+  "payload": "raw per-library counters; no wire-byte claim; asymmetric snapshots preserved",
+  "statistics": "10 independent sessions/cell; mean and sample SD; no stable p95 claim",
+  "primary_contrasts": "paired by rep: VOLE minus bit-OT, Lu minus bit-OT, ABY minus bit-OT, per batch/network; two-sided 95% t CI df=9; 18 descriptive CIs, no multiplicity-adjusted discovery claim",
+  "E3": "deferred until E1 handoff; same-connection API/security audit required",
+  "failure": "stop and retain; no automatic retries or exclusions",
+  "harness_revision": 2,
+  "container_lifetime": "persistent network namespaces; run both drivers via docker exec; clean up only after both driver exits",
+  "recovery": "attempt 001 interrupted in preflight, formal samples 0; archive retained; all 8 preflights repeated; fixed E1 schedule and data unchanged"
+}

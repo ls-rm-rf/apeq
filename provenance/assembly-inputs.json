@@ -1,0 +1,546 @@
+{
+  ".gitignore": {
+    "source": "previous-source/.gitignore",
+    "sha256_at_copy": "96544da88cf218794e9160c294f9850f8ccc439ce944d70fba2a15bdb51ef1a3"
+  },
+  "README.md": {
+    "source": "previous-source/README.md",
+    "sha256_at_copy": "73fe7671d143188746e64f6d987c97303f8f82f33e2faba5f0bc43295a4ca1fc"
+  },
+  "RELEASE_CHECKLIST.md": {
+    "source": "previous-source/RELEASE_CHECKLIST.md",
+    "sha256_at_copy": "9337c19b1355919ad8aca7d6349927965cee0ac67cffbed70da32c920ed8e96b"
+  },
+  "SECURITY.md": {
+    "source": "previous-source/SECURITY.md",
+    "sha256_at_copy": "c6e062419126ae22a0495a6cc3d2e5a26fbf1b4aa04aa2d01a27dc7f78915853"
+  },
+  "THIRD_PARTY.md": {
+    "source": "previous-source/THIRD_PARTY.md",
+    "sha256_at_copy": "07edb2ef53415b0ea0d8fbb7beff82295b040af763c6f4c2e6c84f72ad6b863b"
+  },
+  "analysis/check_bivariate_repair_attack.py": {
+    "source": "previous-source/analysis/check_bivariate_repair_attack.py",
+    "sha256_at_copy": "3ee9fc7b2c39a917e0bc8f3c6796556af1074dc53e3e2587174adfe5d0ef913d"
+  },
+  "analysis/check_candidate_attack.py": {
+    "source": "previous-source/analysis/check_candidate_attack.py",
+    "sha256_at_copy": "bf1cf502d638afd7f1c399a178967b9ef9840203f0e69c881f73d32f3b17a221"
+  },
+  "analysis/check_packed_ole_recovery.cpp": {
+    "source": "previous-source/analysis/check_packed_ole_recovery.cpp",
+    "sha256_at_copy": "2895c59054933759241f501745586f109d3309ad05d4d078f8a16984d8f828cd"
+  },
+  "analysis/check_vole_session.cpp": {
+    "source": "previous-source/analysis/check_vole_session.cpp",
+    "sha256_at_copy": "2d333fab3e108ed8f0c40412c84fbe6a8537dda1de8217d6c164d85b38f3be8f"
+  },
+  "analysis/compare_ole_parameters.py": {
+    "source": "previous-source/analysis/compare_ole_parameters.py",
+    "sha256_at_copy": "299120998fb3705169de2113d94aff31c0836acaa943cd9dc207608f42a26378"
+  },
+  "analysis/estimate_rs.py": {
+    "source": "previous-source/analysis/estimate_rs.py",
+    "sha256_at_copy": "cb4bb9a6c11f4cd040d447fbc1ee35b3af8046abd781125549be168a0f181aeb"
+  },
+  "analysis/README.md": {
+    "source": "previous-source/analysis/README.md",
+    "sha256_at_copy": "3691d24eb7b31784f22333918cd5cea79a526de64920c1324cb989612ab307aa"
+  },
+  "analysis/reproduce_attack_table.py": {
+    "source": "previous-source/analysis/reproduce_attack_table.py",
+    "sha256_at_copy": "09269d82d3db06e302003a0314887e74b0ead73cdcbb5fe3409db270c8e5276b"
+  },
+  "analysis/summarise_tdsc_e2.py": {
+    "source": "previous-source/analysis/summarise_tdsc_e2.py",
+    "sha256_at_copy": "5c9c395922be073a4571fab839cb17598d13a38244b2f3c45f2e64a3fa503fd8"
+  },
+  "apeq-docker/README.md": {
+    "source": "previous-source/apeq-docker/README.md",
+    "sha256_at_copy": "a34e14f37b8b191b582953051e35ded3b8f266bf334366722b0b322c7bfbb82a"
+  },
+  "apeq-ips-ole/CMakeLists.txt": {
+    "source": "previous-source/apeq-ips-ole/CMakeLists.txt",
+    "sha256_at_copy": "24b49007932234ad72723781c0bd8cfc8e883c273758369f6b79fec41a8bdd1c"
+  },
+  "apeq-ips-ole/Dockerfile": {
+    "source": "previous-source/apeq-ips-ole/Dockerfile",
+    "sha256_at_copy": "55496153b095dd80e326bf768a90949467b6d4e975cf8a9d25072b55af8fcadf"
+  },
+  "apeq-ips-ole/Dockerfile.libote": {
+    "source": "previous-source/apeq-ips-ole/Dockerfile.libote",
+    "sha256_at_copy": "a517266bc7e97889bfdedd95bbd959bd12f74284e282ddbf553ae578273a10ce"
+  },
+  "apeq-ips-ole/README.md": {
+    "source": "previous-source/apeq-ips-ole/README.md",
+    "sha256_at_copy": "37775a99c12fada8e68d71cc10605783f1578adce9886331e0e2000befb414b0"
+  },
+  "apeq-lu-eq/SOURCE.md": {
+    "source": "previous-source/apeq-lu-eq/SOURCE.md",
+    "sha256_at_copy": "9fa455bedd02839b408c6eff2c9a1f0ff50cfa73f3dc67d984aec3f745bdcbeb"
+  },
+  "apeq-pipeline/requirements.txt": {
+    "source": "previous-source/apeq-pipeline/requirements.txt",
+    "sha256_at_copy": "4b44a96cd85543cd52693ca38a42c2a69b0e2763b17564e4828c1139fda67247"
+  },
+  "experiments/analyze_e6_crossover.py": {
+    "source": "previous-source/experiments/analyze_e6_crossover.py",
+    "sha256_at_copy": "47601bdb7ca23fbc7af37ddb462856d18eee869ae06245b709015e5c9d9b3e6c"
+  },
+  "experiments/analyze_tcpdump_audit.py": {
+    "source": "previous-source/experiments/analyze_tcpdump_audit.py",
+    "sha256_at_copy": "09124d5c007f79860128d96f4b13877f41807c4502c684afa433f81021524166"
+  },
+  "experiments/analyze_vole_setup_decomposition.py": {
+    "source": "previous-source/experiments/analyze_vole_setup_decomposition.py",
+    "sha256_at_copy": "26c0b8a94c155724797654bf4a27d2feccf1f2d9953f7e4bf375ae84b0fac1c4"
+  },
+  "experiments/build_manifest.py": {
+    "source": "previous-source/experiments/build_manifest.py",
+    "sha256_at_copy": "5f9f050a9daa1321ad96052e4b1257a7e50e03c1f2b2da2e5061197583c96f24"
+  },
+  "experiments/compose_formal_results.py": {
+    "source": "previous-source/experiments/compose_formal_results.py",
+    "sha256_at_copy": "f16b93f8189da376c40052b3dbac0e3dd7780b16912dd5684b89c07d692ee123"
+  },
+  "experiments/compose_replacement_results.py": {
+    "source": "previous-source/experiments/compose_replacement_results.py",
+    "sha256_at_copy": "da37e7abe3cd72479a50be87736ff11ed35eb662e35e32b20f09b339d189eef7"
+  },
+  "experiments/compose_round_results.py": {
+    "source": "previous-source/experiments/compose_round_results.py",
+    "sha256_at_copy": "71f904230abb12077780243d2ff122365a0a874d0ca59931a1b0a26252b43b1f"
+  },
+  "experiments/launch_formal_e6_e8.sh": {
+    "source": "previous-source/experiments/launch_formal_e6_e8.sh",
+    "sha256_at_copy": "df5d816fe8ab886b74362ea781252b8bcf8536a5f4158b42f589bf908751d06f"
+  },
+  "experiments/merge_result_csvs.py": {
+    "source": "previous-source/experiments/merge_result_csvs.py",
+    "sha256_at_copy": "b00f66e959e2311afd7f939c4cb6a3db41154bc13848592e1a261f8566af39ce"
+  },
+  "experiments/monitor_formal_apeq_wide.ps1": {
+    "source": "previous-source/experiments/monitor_formal_apeq_wide.ps1",
+    "sha256_at_copy": "3b06f2459c8cf318d0e58571dc3d24d176eb9f571fd605c0128d1d16c63afaef"
+  },
+  "experiments/monitor_formal_lan.ps1": {
+    "source": "previous-source/experiments/monitor_formal_lan.ps1",
+    "sha256_at_copy": "d883b1457d3ac44af76eb33756cbece813e56adc8107eb0fd69efb450037725b"
+  },
+  "experiments/README.md": {
+    "source": "previous-source/experiments/README.md",
+    "sha256_at_copy": "fc3074d2311d3c0ec8b4667172f99df4923f61e6fb16572981bad90d53c9db6c"
+  },
+  "experiments/REPRODUCING.md": {
+    "source": "previous-source/experiments/REPRODUCING.md",
+    "sha256_at_copy": "e256bb03cf8a2af7139b6ca67c17f97999c1302b7b4513f1afa78210cbfcedf0"
+  },
+  "experiments/run_e6_e8_preflight.sh": {
+    "source": "previous-source/experiments/run_e6_e8_preflight.sh",
+    "sha256_at_copy": "e336deab005b4ecbf7c743a1df7ddb4575cbea0fc269f62e6decc30dbdd9dbe1"
+  },
+  "experiments/run_formal_aby_corrected_background.sh": {
+    "source": "previous-source/experiments/run_formal_aby_corrected_background.sh",
+    "sha256_at_copy": "07605c780d44157784e7429f0006f6c121e1f2297ec0c69697a0b77e22c8ab8e"
+  },
+  "experiments/run_formal_apeq_wide_background.sh": {
+    "source": "previous-source/experiments/run_formal_apeq_wide_background.sh",
+    "sha256_at_copy": "c07d11452a2c9fbb2b4b91830f288e25828b7eedb933782d998021e5907125e0"
+  },
+  "experiments/run_formal_e6_e8_background.sh": {
+    "source": "previous-source/experiments/run_formal_e6_e8_background.sh",
+    "sha256_at_copy": "b60dc457297c9109178a6d079b59bd647a284c7b9677c689593193ecd3c9731e"
+  },
+  "experiments/run_formal_e6_e8_foreground.sh": {
+    "source": "previous-source/experiments/run_formal_e6_e8_foreground.sh",
+    "sha256_at_copy": "dcb0fcc3b2ff97874c75e0760dde0f7bc015f56a72b7e35457f515d3353d679b"
+  },
+  "experiments/run_formal_lan_background.sh": {
+    "source": "previous-source/experiments/run_formal_lan_background.sh",
+    "sha256_at_copy": "43eeb1de28246ac5418f541c7e5d07f97d37981fb5133798a9e8fede37137efc"
+  },
+  "experiments/run_formal_round_widths_background.sh": {
+    "source": "previous-source/experiments/run_formal_round_widths_background.sh",
+    "sha256_at_copy": "f6a2e725029ce396d1d526c7208159b606565e1b3374b2cf96aa60d8d9ac161d"
+  },
+  "experiments/run_round_sweep.sh": {
+    "source": "previous-source/experiments/run_round_sweep.sh",
+    "sha256_at_copy": "ddae6ed13b17e7510a369b11d3fdd8fbe267b2d6667a668542be7ebcd70bda8d"
+  },
+  "experiments/run_tcpdump_audit.sh": {
+    "source": "previous-source/experiments/run_tcpdump_audit.sh",
+    "sha256_at_copy": "181bfc11ffd96bec05fd51b9bc98d3ae02950a32e6cb5a64d17c6f1ef61d5266"
+  },
+  "experiments/verify_formal_package.py": {
+    "source": "previous-source/experiments/verify_formal_package.py",
+    "sha256_at_copy": "8a0641389bc3f4ef83084516feaf3ede60ea278ac70bf17786dafe76b8d15ba9"
+  },
+  "apeq-docker/docker/.dockerignore": {
+    "source": "previous-source/apeq-docker/docker/.dockerignore",
+    "sha256_at_copy": "e19f67c6b6b526e068cc9d57780162e4d031e73f1de51ae58b4ca0186a0a637f"
+  },
+  "apeq-docker/docker/build_image.sh": {
+    "source": "previous-source/apeq-docker/docker/build_image.sh",
+    "sha256_at_copy": "f26955e78aa32d64ebc08d80787df9a7306df5a7583dbd2c110be64f9bc02f8f"
+  },
+  "apeq-docker/docker/Dockerfile.aby": {
+    "source": "previous-source/apeq-docker/docker/Dockerfile.aby",
+    "sha256_at_copy": "c608a52bc7066182e740dd09297b6ff1e9e896bb4c127e622f58384ca347a319"
+  },
+  "apeq-docker/docker/Dockerfile.apeq": {
+    "source": "previous-source/apeq-docker/docker/Dockerfile.apeq",
+    "sha256_at_copy": "c98e0f15f295458948da0001848e410269d2349a44189326c6b8e53cf9c36ca0"
+  },
+  "apeq-docker/docker/Dockerfile.apeq-ot": {
+    "source": "previous-source/apeq-docker/docker/Dockerfile.apeq-ot",
+    "sha256_at_copy": "6f8022ef7fe0721d0ba85bf1a8024068f7247b73be9ea3bd67036e0a2bb6ea97"
+  },
+  "apeq-docker/docker/Dockerfile.apeq-vole": {
+    "source": "previous-source/apeq-docker/docker/Dockerfile.apeq-vole",
+    "sha256_at_copy": "de56ec2955c2c98c8995433b5b1648208292c86b5d2d0e34cd5298dd4786e9a5"
+  },
+  "apeq-docker/docker/Dockerfile.cryptflow2": {
+    "source": "previous-source/apeq-docker/docker/Dockerfile.cryptflow2",
+    "sha256_at_copy": "7b27d79ccf5270cf8c30e6f5220f480f8eacf9aca3a46304899d5fa44fd8c30a"
+  },
+  "apeq-docker/docker/Dockerfile.emp": {
+    "source": "previous-source/apeq-docker/docker/Dockerfile.emp",
+    "sha256_at_copy": "d476c817fe066a9d458c5ec26192ca471805db1289bd77be913b2082acc84573"
+  },
+  "apeq-docker/docker/Dockerfile.lu": {
+    "source": "previous-source/apeq-docker/docker/Dockerfile.lu",
+    "sha256_at_copy": "86c70526723b664cc4ed8b71f56225c8dc975cb97b7c3ad3c801b155118d5d28"
+  },
+  "apeq-docker/docker/Dockerfile.mock": {
+    "source": "previous-source/apeq-docker/docker/Dockerfile.mock",
+    "sha256_at_copy": "831e8aaee23f8e4eea9b68bd16fc1965185e9f6ae47502c2eeb6731526d59354"
+  },
+  "apeq-docker/docker/Dockerfile.volepsi": {
+    "source": "previous-source/apeq-docker/docker/Dockerfile.volepsi",
+    "sha256_at_copy": "e5bb8604594f3db680221116044a6f29716b36454b64ccc7da6b52c522265b26"
+  },
+  "apeq-docker/docker/run_all.sh": {
+    "source": "previous-source/apeq-docker/docker/run_all.sh",
+    "sha256_at_copy": "b8b143cb3caa2891b85e06aceec3d5ca7f717966ccb21179c22accc36612368f"
+  },
+  "apeq-docker/docker/run_pair.ps1": {
+    "source": "previous-source/apeq-docker/docker/run_pair.ps1",
+    "sha256_at_copy": "c11394a3cb04c81f218682f0c678c269ae8a1521396d5848d511c6a3aee5062e"
+  },
+  "apeq-docker/docker/run_tdsc_e2.sh": {
+    "source": "previous-source/apeq-docker/docker/run_tdsc_e2.sh",
+    "sha256_at_copy": "a06b292eb62771047c4e3746ee16016b8059fb9aaf84302d88d79c02b508ec0c"
+  },
+  "apeq-docker/docker/write_status_rows.py": {
+    "source": "previous-source/apeq-docker/docker/write_status_rows.py",
+    "sha256_at_copy": "a0886257414c57a2696f5312e5841bfca65cccd050c98733ed476caf2c5c4645"
+  },
+  "apeq-docker/docker/bench/aby_eq.cpp": {
+    "source": "previous-source/apeq-docker/docker/bench/aby_eq.cpp",
+    "sha256_at_copy": "063967539c77c49a88a579e45a20612c595f401e199d4d51d8ad34b281f0fe5d"
+  },
+  "apeq-docker/docker/bench/apeq_eq.cpp": {
+    "source": "previous-source/apeq-docker/docker/bench/apeq_eq.cpp",
+    "sha256_at_copy": "2e0dacfee4a18df38385ab3c1f17d955b5bc0fcaf8814fd3d0b2a2e73c877829"
+  },
+  "apeq-docker/docker/bench/apeq_ot_eq.cpp": {
+    "source": "previous-source/apeq-docker/docker/bench/apeq_ot_eq.cpp",
+    "sha256_at_copy": "a9797ac6ffcca77322317b760723cdaa0a0bb68e91655d16c0662a9b39f77c10"
+  },
+  "apeq-docker/docker/bench/apeq_vole_digest.h": {
+    "source": "previous-source/apeq-docker/docker/bench/apeq_vole_digest.h",
+    "sha256_at_copy": "451ffa6d60f1932dc3fc065fe43094d3306f1570899b5933dd19f1628e14df16"
+  },
+  "apeq-docker/docker/bench/apeq_vole_eq.cpp": {
+    "source": "previous-source/apeq-docker/docker/bench/apeq_vole_eq.cpp",
+    "sha256_at_copy": "7a83972db6446a5d5a70a1bc3421823d51b856f3837064fbc4cd16278cbc0873"
+  },
+  "apeq-docker/docker/bench/CMakeLists.aby.txt": {
+    "source": "previous-source/apeq-docker/docker/bench/CMakeLists.aby.txt",
+    "sha256_at_copy": "c032216f273ccd703b7d8e021243ab649a91f531394396e8ce46f57bfe20e7f0"
+  },
+  "apeq-docker/docker/bench/CMakeLists.apeq-vole.txt": {
+    "source": "previous-source/apeq-docker/docker/bench/CMakeLists.apeq-vole.txt",
+    "sha256_at_copy": "c93bfb9d4af69ed9be473b95c95897d509b58811eb7a72e8c2c1cd666f0c5614"
+  },
+  "apeq-docker/docker/bench/CMakeLists.apeq.txt": {
+    "source": "previous-source/apeq-docker/docker/bench/CMakeLists.apeq.txt",
+    "sha256_at_copy": "009a3324a3e9f0863413ad7878098ecb6ad3726345f0613a34c40e9cce9f4f01"
+  },
+  "apeq-docker/docker/bench/CMakeLists.emp.txt": {
+    "source": "previous-source/apeq-docker/docker/bench/CMakeLists.emp.txt",
+    "sha256_at_copy": "b0bdb7b42b579503c3d16528fa68cc565226ec8673ef219c694845c06cc400f5"
+  },
+  "apeq-docker/docker/bench/CMakeLists.lu.txt": {
+    "source": "previous-source/apeq-docker/docker/bench/CMakeLists.lu.txt",
+    "sha256_at_copy": "cccf54be96eb47561bbe79f925ead3ad1354c2027189317b36b02b19b2e4714b"
+  },
+  "apeq-docker/docker/bench/CMakeLists.mock.txt": {
+    "source": "previous-source/apeq-docker/docker/bench/CMakeLists.mock.txt",
+    "sha256_at_copy": "979ffd728f5e39293690770df108b9b03c00027114fee2ac00cd1cf53644c4f6"
+  },
+  "apeq-docker/docker/bench/CMakeLists.sci.txt": {
+    "source": "previous-source/apeq-docker/docker/bench/CMakeLists.sci.txt",
+    "sha256_at_copy": "3035bf89b6c68e6e44bf1c8f11d7aaf2130f677fc9763bb63250667c6e14ef61"
+  },
+  "apeq-docker/docker/bench/CMakeLists.volepsi.txt": {
+    "source": "previous-source/apeq-docker/docker/bench/CMakeLists.volepsi.txt",
+    "sha256_at_copy": "9572d62106165f86dca301c943b6adfe6cf5a09a78d99cc918bd2366050c860f"
+  },
+  "apeq-docker/docker/bench/counting_io.h": {
+    "source": "previous-source/apeq-docker/docker/bench/counting_io.h",
+    "sha256_at_copy": "a8d8025785226c06beeae8209cd2c9c982cbdea49e9a76efb262fb9b034d21d9"
+  },
+  "apeq-docker/docker/bench/cryptflow2_eq.cpp": {
+    "source": "previous-source/apeq-docker/docker/bench/cryptflow2_eq.cpp",
+    "sha256_at_copy": "ded6605722c2c4ee2c8ac3fb937e9d58de53ea797597049d2279ce56e834c587"
+  },
+  "apeq-docker/docker/bench/csv_row.h": {
+    "source": "previous-source/apeq-docker/docker/bench/csv_row.h",
+    "sha256_at_copy": "fc7aefeb8130e147c27fccb2d852881ed777017eac1f5826329f25b8caecb183"
+  },
+  "apeq-docker/docker/bench/driver_common.h": {
+    "source": "previous-source/apeq-docker/docker/bench/driver_common.h",
+    "sha256_at_copy": "2ab3999b3d39c6c8ba90bba3ee968ac59224e4ad615b42ffa127f37b2fa18df5"
+  },
+  "apeq-docker/docker/bench/emp_eq.cpp": {
+    "source": "previous-source/apeq-docker/docker/bench/emp_eq.cpp",
+    "sha256_at_copy": "23e8651c1a06be8161d2295e4218d88c4b5f455d6d05e331e5f2c09798fb9854"
+  },
+  "apeq-docker/docker/bench/lu_eq.cpp": {
+    "source": "previous-source/apeq-docker/docker/bench/lu_eq.cpp",
+    "sha256_at_copy": "71c5c0f39c312f7137dd81f5d5ce0740182c2c638bb9cb0462279d8acd993fda"
+  },
+  "apeq-docker/docker/bench/mock_eq.cpp": {
+    "source": "previous-source/apeq-docker/docker/bench/mock_eq.cpp",
+    "sha256_at_copy": "1af29b33f63431e0f29aa45e26e5106632ddfe0da088ed997d39186a62ea0aeb"
+  },
+  "apeq-docker/docker/bench/request_socket.h": {
+    "source": "previous-source/apeq-docker/docker/bench/request_socket.h",
+    "sha256_at_copy": "b9b935301b4a8b6bd14260581dd8827a0caf43c01f5f96e7e9ba8b685705b7b6"
+  },
+  "apeq-docker/docker/bench/TESTING.md": {
+    "source": "previous-source/apeq-docker/docker/bench/TESTING.md",
+    "sha256_at_copy": "5bdcb441e07bd9025e7e9a7c37da3315f54c1ccd4454a4eaf1b00e4d2585fcfc"
+  },
+  "apeq-docker/docker/bench/volepsi_eq.cpp": {
+    "source": "previous-source/apeq-docker/docker/bench/volepsi_eq.cpp",
+    "sha256_at_copy": "dfd9a8c945333d96a0cafb3db0b7cd0ec669ef896cadf7edc2bfe3a3a2b1ced3"
+  },
+  "apeq-docker/docker/patches/aby-encrypto-channel-end-blocking.patch": {
+    "source": "previous-source/apeq-docker/docker/patches/aby-encrypto-channel-end-blocking.patch",
+    "sha256_at_copy": "877a75d3422f9347d4de85b574aa339c155f251a9731fab38393227fed58e93f"
+  },
+  "apeq-docker/docker/patches/aby-encrypto-hash-ctr-threadsafe.patch": {
+    "source": "previous-source/apeq-docker/docker/patches/aby-encrypto-hash-ctr-threadsafe.patch",
+    "sha256_at_copy": "41a037b102265f60c86bb00a9db5360f0dfda76baa5bdd92424c0a53c1f1e6ac"
+  },
+  "apeq-docker/docker/patches/aby-phase-accounting.patch": {
+    "source": "previous-source/apeq-docker/docker/patches/aby-phase-accounting.patch",
+    "sha256_at_copy": "ac78704601263cd9924091e12cd78e149283d5dbcd93cacfdfa6964fff4377e2"
+  },
+  "apeq-docker/docker/patches/cryptflow2-sci-recv-counter.patch": {
+    "source": "previous-source/apeq-docker/docker/patches/cryptflow2-sci-recv-counter.patch",
+    "sha256_at_copy": "8d97b394f96254558f5403624b5eb7ca59343a6de95b72a59506c08b7c523238"
+  },
+  "apeq-docker/docker/patches/cryptflow2-seal-gcc11.patch": {
+    "source": "previous-source/apeq-docker/docker/patches/cryptflow2-seal-gcc11.patch",
+    "sha256_at_copy": "278e8d8bbf4aff875fa1d382381a474be78208001ecb01dea32982d37d54ce0b"
+  },
+  "apeq-docker/docker/patches/emp-tool-0.3.0-recv-counter.patch": {
+    "source": "previous-source/apeq-docker/docker/patches/emp-tool-0.3.0-recv-counter.patch",
+    "sha256_at_copy": "739d055d26632b6d06dde54c7003c73ce67193fd12b91ba5300c568d04284ce1"
+  },
+  "apeq-docker/docker/patches/lu-eq-phase-accounting.patch": {
+    "source": "previous-source/apeq-docker/docker/patches/lu-eq-phase-accounting.patch",
+    "sha256_at_copy": "3cb63e7540c86664b5f54a2d01d71b6e11e8cddabd2e43fa4da8a5f7a28bb595"
+  },
+  "apeq-docker/docker/patches/volepsi-rsoprf-preprocess.patch": {
+    "source": "previous-source/apeq-docker/docker/patches/volepsi-rsoprf-preprocess.patch",
+    "sha256_at_copy": "cc965f4f24c7415641a0a768ccde4b2a75e74c79abd93eeb6972e2704a33e2a3"
+  },
+  "apeq-ips-ole/adapters/libote_retriever.cpp": {
+    "source": "previous-source/apeq-ips-ole/adapters/libote_retriever.cpp",
+    "sha256_at_copy": "697ec36d62b4921f35abf3ba36186edfab1396e8b9cc1c03c5b2e5554841789e"
+  },
+  "apeq-ips-ole/adapters/libote_retriever.h": {
+    "source": "previous-source/apeq-ips-ole/adapters/libote_retriever.h",
+    "sha256_at_copy": "8f4e3cb1f936b1950203a1340b7a8e04fd90bbcf9d2bb917cd4003059f233ea9"
+  },
+  "apeq-ips-ole/reference/apeq_ole.py": {
+    "source": "previous-source/apeq-ips-ole/reference/apeq_ole.py",
+    "sha256_at_copy": "27ef429e4fb55fe588e09747ca22c023d8db6fe8b597b5ad112eebe3d254c9bd"
+  },
+  "apeq-ips-ole/src/core.cpp": {
+    "source": "previous-source/apeq-ips-ole/src/core.cpp",
+    "sha256_at_copy": "b4882ae24e7f36ce833692808f239845f166362903b2c7d94bde00acd9c1f96b"
+  },
+  "apeq-ips-ole/tests/lint.sh": {
+    "source": "previous-source/apeq-ips-ole/tests/lint.sh",
+    "sha256_at_copy": "444f22515d2921d9ee48b18a744fc15f8bdee639102762379dc8bb80b52f247b"
+  },
+  "apeq-ips-ole/tests/test_core.cpp": {
+    "source": "previous-source/apeq-ips-ole/tests/test_core.cpp",
+    "sha256_at_copy": "ed78978be6240183354827b88f0898c460dfcd20f8dea7e5481e885c105bf272"
+  },
+  "apeq-ips-ole/tests/test_libote_retriever.cpp": {
+    "source": "previous-source/apeq-ips-ole/tests/test_libote_retriever.cpp",
+    "sha256_at_copy": "c4188020d7d2f3b24019100e48caac5d12915229348c2b93e3f82ae540e9ed82"
+  },
+  "apeq-ips-ole/tests/test_libote_tcp.cpp": {
+    "source": "previous-source/apeq-ips-ole/tests/test_libote_tcp.cpp",
+    "sha256_at_copy": "c955834c299403ea0ff63b84eb17cea8bdb93e8f8c4c617752ab85b285da49cd"
+  },
+  "apeq-ips-ole/tools/vector_dump.cpp": {
+    "source": "previous-source/apeq-ips-ole/tools/vector_dump.cpp",
+    "sha256_at_copy": "6dbd0a214acb8de4b1763cc1288c3a94f35479a578589158a972874819a1146a"
+  },
+  "apeq-ips-ole/include/ips_ole/core.h": {
+    "source": "previous-source/apeq-ips-ole/include/ips_ole/core.h",
+    "sha256_at_copy": "985254abbe6f029fbb8ca4b4dba6a0aa6b4ee57403a7b5e1974f5a63b63c3d70"
+  },
+  "apeq-ips-ole/include/ips_ole/labels.h": {
+    "source": "previous-source/apeq-ips-ole/include/ips_ole/labels.h",
+    "sha256_at_copy": "7ac07d50b4cbd9aca14383fa0d5a74863a7e5dbb85626d7cc8f8040049781bb5"
+  },
+  "apeq-ips-ole/tests/support/in_memory_retriever.h": {
+    "source": "previous-source/apeq-ips-ole/tests/support/in_memory_retriever.h",
+    "sha256_at_copy": "d6419d1ae5a2c52b79ec88f76b2dddc142a736a06852642b666ef970a495e956"
+  },
+  "apeq-pipeline/scripts/estimate_rounds.py": {
+    "source": "previous-source/apeq-pipeline/scripts/estimate_rounds.py",
+    "sha256_at_copy": "503324a84894a41e4692af15c85495f9402e31c0d0f36b0ac480aeeb76e83556"
+  },
+  "apeq-pipeline/scripts/gen_synth.py": {
+    "source": "previous-source/apeq-pipeline/scripts/gen_synth.py",
+    "sha256_at_copy": "8fc8460c2381bb1a8dfb17d4afb02672ef0a8dd1500392ff2a071f694ecebde5"
+  },
+  "apeq-pipeline/scripts/make_correctness.py": {
+    "source": "previous-source/apeq-pipeline/scripts/make_correctness.py",
+    "sha256_at_copy": "b8c165a5d684d3e175f88e772eca8d5be3c89f15fbf896556c323304cdd19f3d"
+  },
+  "apeq-pipeline/scripts/make_figures.py": {
+    "source": "previous-source/apeq-pipeline/scripts/make_figures.py",
+    "sha256_at_copy": "d4dfc3f8dbc30c6ea2e8cab094331f11499ed709cc3762a1616af8f98355bd0b"
+  },
+  "apeq-pipeline/scripts/make_round_width_figure.py": {
+    "source": "previous-source/apeq-pipeline/scripts/make_round_width_figure.py",
+    "sha256_at_copy": "c482225e298b5e48a9a3e5cc4d68fcc6fb4bdeb7488aee795eaef70e15fe10ac"
+  },
+  "apeq-pipeline/scripts/make_tables.py": {
+    "source": "previous-source/apeq-pipeline/scripts/make_tables.py",
+    "sha256_at_copy": "cc650061c0b2e79919f95f29bf0dfeb23139317b97d776f07c4dbeb0183666d1"
+  },
+  "apeq-pipeline/scripts/normalize_aby_phases.py": {
+    "source": "previous-source/apeq-pipeline/scripts/normalize_aby_phases.py",
+    "sha256_at_copy": "e35d5a2abf4e0bd2f8c286f74a4017c4cfad35faac871dcbc3b11f664e6624ad"
+  },
+  "apeq-pipeline/scripts/README.md": {
+    "source": "previous-source/apeq-pipeline/scripts/README.md",
+    "sha256_at_copy": "1ef7ec5289eb472915e99e2f061d7fbca4d55deff3709eafef986c9d295da326"
+  },
+  "apeq-pipeline/scripts/validate.py": {
+    "source": "previous-source/apeq-pipeline/scripts/validate.py",
+    "sha256_at_copy": "b6d4280f4f98b6bd9cabc3077368376d3cd22caff6ee496e7036fa1699cdbedc"
+  },
+  "apeq-pipeline/spec/ips-ole-backend.md": {
+    "source": "previous-source/apeq-pipeline/spec/ips-ole-backend.md",
+    "sha256_at_copy": "1029f0661aa2ede7c73a4215bc078afd05515503edf583a798fbb5c7ff98c55d"
+  },
+  "apeq-pipeline/spec/measurement-framework.md": {
+    "source": "previous-source/apeq-pipeline/spec/measurement-framework.md",
+    "sha256_at_copy": "7b2cc2b6a295bda32189ef765a40b997a35f763f22088233a6dcbb1af528a032"
+  },
+  "experiments/tests/test_release_tools.py": {
+    "source": "previous-source/experiments/tests/test_release_tools.py",
+    "sha256_at_copy": "3827a6bd8170a3d65a0ce68b914f81002790be996f2398b4dbcc9542ecada5fa"
+  },
+  "reproduction/tools/run_application_v5.py": {
+    "source": "paper-tools/run_application_v5.py",
+    "sha256_at_copy": "ddbf8ddfc8eb9884560e2fdf28bd0e4e6b58fc4c3148780ff5357fde1549619e"
+  },
+  "reproduction/tools/run_sequence_v5.py": {
+    "source": "paper-tools/run_sequence_v5.py",
+    "sha256_at_copy": "96688c14c90528a1ecfc31a90b36c19b47a2b0a1158fc6415a2dbb1c661babd4"
+  },
+  "reproduction/tools/analyse_application_v5.py": {
+    "source": "paper-tools/analyse_application_v5.py",
+    "sha256_at_copy": "60b457a4ea3685d46acd4ed10c182f5615e47e6b608727998167f8e163fc68c5"
+  },
+  "reproduction/tools/analyse_sequence_v5.py": {
+    "source": "paper-tools/analyse_sequence_v5.py",
+    "sha256_at_copy": "0b41044ca7b16970798b567ae580e89d0ddc99a2a832e1f6367d7e72077b0c81"
+  },
+  "reproduction/tools/check_application_harness_v5.py": {
+    "source": "paper-tools/check_application_harness_v5.py",
+    "sha256_at_copy": "f3216bdc3ff7a7912e1d540b0d8f40be50e37e95daae3532838788970efa43d0"
+  },
+  "reproduction/tools/check_sequence_validator_v5.py": {
+    "source": "paper-tools/check_sequence_validator_v5.py",
+    "sha256_at_copy": "a37ef1e830b21c525c675192320a62283c7318d87bcc2037f62d6590793217a0"
+  },
+  "reproduction/tools/check_application_io_v5.cpp": {
+    "source": "paper-tools/check_application_io_v5.cpp",
+    "sha256_at_copy": "4eb1082a2d3d2835c425e1c8692e043337896afcaae6386ee042feb481bf9c33"
+  },
+  "reproduction/tools/check_application_v5_local.sh": {
+    "source": "paper-tools/check_application_v5_local.sh",
+    "sha256_at_copy": "2d64041bef8e5af009d8660528afd80142daa79ae1c9d20b4c1476353df639cf"
+  },
+  "reproduction/tools/check_bivariate_family_v5.py": {
+    "source": "paper-tools/check_bivariate_family_v5.py",
+    "sha256_at_copy": "4906750d413ea53c50bcf3113ff5a50ca0b9964abd85b0ccfc0a3d603da48a16"
+  },
+  "reproduction/tools/check_bivariate_rank_v4.py": {
+    "source": "paper-tools/check_bivariate_rank_v4.py",
+    "sha256_at_copy": "3e641a5a9c0950a4591a1e179e4da9ef69bc27d8d166176c13c1551c1ce3c77f"
+  },
+  "reproduction/tools/start_application_v5.ps1": {
+    "source": "paper-tools/start_application_v5.ps1",
+    "sha256_at_copy": "f3c957bc8964163b49ad311765c4ea0b68e6cbb4eacba967d840dc86191843ca"
+  },
+  "reproduction/tools/start_sequence_v5.ps1": {
+    "source": "paper-tools/start_sequence_v5.ps1",
+    "sha256_at_copy": "3b009a3795c231579a3291f8926805ce6bba92e8cb6b187da87a7a6b5fb8a090"
+  },
+  "reproduction/tools/monitor_application_v5.ps1": {
+    "source": "paper-tools/monitor_application_v5.ps1",
+    "sha256_at_copy": "cb8129c1e0dc4d24afc34a07c09aaadc05138cc37f1c8872807cca9adfece30e"
+  },
+  "reproduction/tools/monitor_sequence_v5.ps1": {
+    "source": "paper-tools/monitor_sequence_v5.ps1",
+    "sha256_at_copy": "4ddcd67fc29857493a3531fcd63a2e655d969f19ea1c4b3b743bf108ded4bc08"
+  },
+  "reproduction/tools/make_v5_results.py": {
+    "source": "paper-tools/make_v5_results.py",
+    "sha256_at_copy": "56316bbd1f82e709a29d570cc7a05b10751f78a8974669440c89ce6905748728"
+  },
+  "reproduction/tools/prepare_r2.py": {
+    "source": "paper-tools/prepare_r2.py",
+    "sha256_at_copy": "387d11fb8c2f7239b15cf1d7ace02a40d481caa04532d831b2c279fb6ea13b0e"
+  },
+  "reproduction/tools/prepare_v4.py": {
+    "source": "paper-tools/prepare_v4.py",
+    "sha256_at_copy": "30c28813edc6686ef43de67c18454772a550f5f1aea2d86098b7ac3b6779f6cb"
+  },
+  "reproduction/tools/summarise_r2.py": {
+    "source": "paper-tools/summarise_r2.py",
+    "sha256_at_copy": "e98368aaa144f2e9b441b14f64122c791b271e094629e5c7b50fa7c02c7b1ff9"
+  },
+  "reproduction/tools/summarise_v4.py": {
+    "source": "paper-tools/summarise_v4.py",
+    "sha256_at_copy": "573b171e9e9d8c661088496c8d9fc6a569ba9f8fb76aa9462e4a66accb946139"
+  },
+  "reproduction/tools/build_r2_images.sh": {
+    "source": "paper-tools/build_r2_images.sh",
+    "sha256_at_copy": "4b20b086b546014122b45954d67ab295f6a42408836c3b2589cb2621575ed96d"
+  },
+  "reproduction/tools/build_v4_images.sh": {
+    "source": "paper-tools/build_v4_images.sh",
+    "sha256_at_copy": "2e139a448307fe16a628bb31ef73da71c34c8ddfd5b5b259bf83c652c22c2b4c"
+  },
+  "reproduction/tools/check_v4.sh": {
+    "source": "paper-tools/check_v4.sh",
+    "sha256_at_copy": "cc8f0974cebf26d7d05ed87fe7002bfbfa168a8a213c1551450959d588eb2054"
+  }
+}

@@ -1,0 +1,24 @@
+# Official Lu et al. artifact plus a separately maintained measurement patch.
+# The upstream archive remains unmodified in apeq-lu-eq/2PC_eq_cmp-main.
+FROM apeq/volepsi:latest
+
+ARG BENCH_REVISION=unknown
+ARG BUILD_JOBS=4
+
+COPY --from=lu-source . /opt/lu-upstream
+COPY patches/lu-eq-phase-accounting.patch /opt/patches/lu-eq-phase-accounting.patch
+RUN cd /opt/lu-upstream && patch -p1 < /opt/patches/lu-eq-phase-accounting.patch
+
+COPY bench/lu_eq.cpp /opt/lu-bench/lu_eq.cpp
+COPY bench/CMakeLists.lu.txt /opt/lu-bench/CMakeLists.txt
+COPY bench/driver_common.h /opt/lu-bench/driver_common.h
+COPY bench/csv_row.h /opt/lu-bench/csv_row.h
+
+RUN cd /opt/lu-bench \
+    && cmake -DCMAKE_BUILD_TYPE=Release \
+        -DBENCH_REVISION="${BENCH_REVISION}" \
+        -DCMAKE_PREFIX_PATH=/opt/volepsi-install . \
+    && make -j"${BUILD_JOBS}" \
+    && cp driver /opt/bench/driver
+
+ENTRYPOINT ["/opt/bench/driver"]

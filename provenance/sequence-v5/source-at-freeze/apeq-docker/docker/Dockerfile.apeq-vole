@@ -1,0 +1,23 @@
+# End-to-end APEQ-VOLE image. Build apeq/volepsi first; this deliberately uses
+# that image as the common pinned libOTe/cryptoTools/coproto dependency layer so
+# APEQ-VOLE and the VolePSI baseline cannot silently benchmark different stacks.
+FROM apeq/volepsi:latest
+
+ARG BENCH_REVISION=unknown
+ARG BUILD_JOBS=4
+
+COPY bench/apeq_vole_eq.cpp /opt/apeq-vole-bench/apeq_vole_eq.cpp
+COPY bench/apeq_vole_digest.h /opt/apeq-vole-bench/apeq_vole_digest.h
+COPY bench/CMakeLists.apeq-vole.txt /opt/apeq-vole-bench/CMakeLists.txt
+COPY bench/driver_common.h /opt/apeq-vole-bench/driver_common.h
+COPY bench/request_socket.h /opt/apeq-vole-bench/request_socket.h
+COPY bench/csv_row.h /opt/apeq-vole-bench/csv_row.h
+
+RUN cd /opt/apeq-vole-bench \
+    && cmake -DCMAKE_BUILD_TYPE=Release \
+        -DBENCH_REVISION="${BENCH_REVISION}" \
+        -DCMAKE_PREFIX_PATH=/opt/volepsi-install . \
+    && make -j"${BUILD_JOBS}" \
+    && cp driver /opt/bench/driver
+
+ENTRYPOINT ["/opt/apeq-vole-bench/driver"]

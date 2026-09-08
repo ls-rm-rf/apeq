@@ -1,0 +1,102 @@
+# =============================================================================
+# ABY equality baseline
+#
+# Verified build path for the pinned ABY revision. ABY dates from 2015, so the
+# image deliberately retains Ubuntu 20.04 and GCC 9.
+#
+# Build:  docker build -t apeq/aby -f Dockerfile.aby .
+# =============================================================================
+
+# Ubuntu 20.04 deliberately: ABY predates GCC 11's stricter template handling
+# and its bundled ENCRYPTO_utils/OTExtension pull in headers that were dropped
+# in later libstdc++.
+FROM ubuntu:20.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=UTC
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        build-essential \
+        g++-9 \
+        gcc-9 \
+        cmake \
+        git \
+        ca-certificates \
+        libgmp-dev \
+        libssl-dev \
+        libboost-all-dev \
+        python3 \
+        iproute2 \
+        tcpdump \
+        iputils-ping \
+    && rm -rf /var/lib/apt/lists/*
+
+# Force GCC 9. ABY does not build cleanly on 10+.
+ENV CC=/usr/bin/gcc-9
+ENV CXX=/usr/bin/g++-9
+
+WORKDIR /opt
+
+ARG ABY_REF=88fed3ef6789580cac342201e135a358a083ca36
+
+COPY patches/aby-encrypto-hash-ctr-threadsafe.patch /opt/patches/aby-encrypto-hash-ctr-threadsafe.patch
+COPY patches/aby-encrypto-channel-end-blocking.patch /opt/patches/aby-encrypto-channel-end-blocking.patch
+COPY patches/aby-phase-accounting.patch /opt/patches/aby-phase-accounting.patch
+
+# ABY vendors ENCRYPTO_utils and OTExtension via CMake ExternalProject, so this
+# clone pulls a lot at configure time. If the network is restricted, vendor the
+# dependencies manually and point ABY's CMake at the local copies.
+RUN git clone https://github.com/encryptogroup/ABY.git \
+    && cd ABY && git checkout ${ABY_REF} \
+    && git submodule update --init extern/ENCRYPTO_utils \
+    && git -C extern/ENCRYPTO_utils apply /opt/patches/aby-encrypto-hash-ctr-threadsafe.patch \
+    && git -C extern/ENCRYPTO_utils apply /opt/patches/aby-encrypto-channel-end-blocking.patch \
+    && git apply /opt/patches/aby-phase-accounting.patch \
+    && mkdir build && cd build \
+    && cmake .. -DCMAKE_BUILD_TYPE=Release -DABY_BUILD_EXE=On \
+    && make -j"$(nproc)"
+
+ARG BENCH_REVISION=unknown
+COPY bench/aby_eq.cpp /opt/bench/aby_eq.cpp
+COPY bench/CMakeLists.aby.txt /opt/bench/CMakeLists.txt
+COPY bench/driver_common.h /opt/bench/driver_common.h
+COPY bench/csv_row.h /opt/bench/csv_row.h
+
+RUN cd /opt/bench && cmake -DCMAKE_BUILD_TYPE=Release \
+        -DBENCH_REVISION="${BENCH_REVISION}" \
+        -DABY_ROOT=/opt/ABY . && make -j"$(nproc)"
+
+ENV PATH="/opt/bench:${PATH}"
+
+ENTRYPOINT ["/opt/bench/driver"]
+
+# =============================================================================
+# KNOWN ISSUES AND WHAT TO TRY
+#
+# 1. "error: 'numeric_limits' is not a member of 'std'"  (and similar)
+#    Missing <limits>, <cstdint>, <stdexcept> in ABY's headers. Add
+#    -include limits -include cstdint via CMAKE_CXX_FLAGS rather than patching
+#    sources; keep any patch you do need as a .patch file in the artifact.
+#
+# 2. ExternalProject fails to fetch ENCRYPTO_utils / OTExtension
+#    Their pinned refs have moved. Either update the refs in
+#    extern/*/CMakeLists.txt or vendor the sources.
+#
+# 3. Boost 1.71 vs ABY's expectations
+#    ABY expects the Boost that shipped with 18.04/20.04. If Boost is upgraded
+#    the build breaks; keep 20.04's default.
+#
+# 4. "relocation R_X86_64_32S against ..." at link time
+#    Add -fPIC to both ABY and the driver.
+#
+# MEASUREMENT NOTES
+#
+# The driver exposes ABY's own equality gate as two separate variants:
+# --variant yao selects S_YAO and --variant gmw selects S_BOOL.  Never average
+# the two sharings; Yao is the constant-round competitor relevant to APEQ's
+# round-complexity claim.
+#
+# ABY's Setup/Online split maps directly onto setup_ms/online_ms. Take the
+# values from ABY's own timing struct rather than wrapping the whole call, so
+# the split matches what the spec asks for.
+# =============================================================================

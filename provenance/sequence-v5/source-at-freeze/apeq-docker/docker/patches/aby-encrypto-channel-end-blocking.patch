@@ -1,0 +1,16 @@
+diff --git a/src/ENCRYPTO_utils/channel.cpp b/src/ENCRYPTO_utils/channel.cpp
+--- a/src/ENCRYPTO_utils/channel.cpp
++++ b/src/ENCRYPTO_utils/channel.cpp
+@@ -143,7 +143,11 @@ bool channel::data_available() {
+ }
+ 
+ void channel::signal_end() {
+-	m_cSnder->signal_end(m_bChannelID);
++	// Preserve FIFO ordering but wait until the sender thread has processed all
++	// earlier payloads and this end marker before phase counters are sampled.
++	CEvent sent;
++	m_cSnder->add_event_snd_task(&sent, m_bChannelID, 0, nullptr);
++	sent.Wait();
+ 	m_bSndAlive = false;
+ }
+ 

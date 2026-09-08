@@ -1,0 +1,115 @@
+--- a/neweq.h
++++ b/neweq.h
+@@ -1,6 +1,6 @@
+ #pragma once
+ 
+-#include "libOTe/include/boost/variant/variant.hpp"
++#include <boost/variant/variant.hpp>
+ #include "cryptoTools/Common/Timer.h"
+ // #include "ots.h"
+ #include "utils.h"
+@@ -23,6 +23,17 @@ using namespace std;
+ using namespace osuCrypto;
+ using namespace coproto;
+ 
++struct Eq2PhaseStats {
++    double base_ot_ms = 0;
++    double setup_ms = 0;
++    double online_ms = 0;
++    uint64_t setup_bytes_sent = 0;
++    uint64_t setup_bytes_recv = 0;
++    uint64_t online_bytes_sent = 0;
++    uint64_t online_bytes_recv = 0;
++    uint64_t n_ot = 0;
++};
++
+ 
+ template<typename T>
+ class eq1{
+@@ -55,6 +66,7 @@ class eq2{
+     PRNG prg;
+     BitVector r;
+     T* t;
++    Eq2PhaseStats phase;
+     void initOT(IknpOtExtSender *sender, IknpOtExtReceiver *recver);
+     void convert_offline(T p, int size);
+     void convert_online(T p, int size, BitVector bits, T* output);
+@@ -64,6 +76,7 @@ public:
+     }
+     void run(vector<block> &data, BitVector &output, uint32_t ell, int numThreads = 1, bool random = false);
+     void online(int size, int len, T* lookupTable, T* delta, T* x, T* output);
++    const Eq2PhaseStats& stats() const { return phase; }
+ };
+ 
+ template<typename T>
+@@ -253,7 +266,10 @@ eq2<T>::eq2(Role role, string ip, IknpOtExtSender *sender, IknpOtExtReceiver *r
+     this->role = role;
+     chl = coproto::asioConnect(ip, role == Role::Sender);
+     prg.SetSeed(sysRandomSeed());
++    auto begin = std::chrono::steady_clock::now();
+     initOT(sender, recver);
++    auto end = std::chrono::steady_clock::now();
++    phase.base_ot_ms = std::chrono::duration<double, std::milli>(end - begin).count();
+ }
+ 
+ template<typename T>
+@@ -320,14 +336,17 @@ void eq2<T>::run(vector<block> &data, BitVector &output, uint32_t ell, int numT
+     convert_offline(p, size);
+     eq11.offline(n, p);
+ 
+-    offline_end = timer.setTimePoint("offline_end");
+-    u64 com_off_end = chl.bytesReceived() + chl.bytesSent();
+-    
+     cout << "=====offline end=====" << endl;
+     sync_wait(sync(chl, role));
++    sync_wait(chl.flush());
++    offline_end = timer.setTimePoint("offline_end");
++    u64 com_off_end = chl.bytesReceived() + chl.bytesSent();
++    phase.setup_ms = phase.base_ot_ms +
++        std::chrono::duration<double, std::milli>(offline_end - offline_start).count();
++    phase.setup_bytes_sent = chl.bytesSent();
++    phase.setup_bytes_recv = chl.bytesReceived();
+     //==========online===========
+     cout << "=====online start=====" << endl;
+-    u64 com_begin = chl.bytesReceived() + chl.bytesSent();
+     online_start = timer.setTimePoint("online_start");
+ 
+     convert_online(p, size, bits, share);
+@@ -347,8 +366,26 @@ void eq2<T>::run(vector<block> &data, BitVector &output, uint32_t ell, int numT
+ 
+ 
+     eq11.online(n, p, addshare, output);
++
++    // The artifact returns XOR shares. Normalize to the benchmark's one-sided
++    // plaintext output by revealing the holder's share to the querier.
++    if (role == Role::Sender) {
++        sync_wait(chl.send(output));
++    } else {
++        BitVector holder_share(n);
++        sync_wait(chl.recv(holder_share));
++        output ^= holder_share;
++    }
++    sync_wait(chl.flush());
+     cout << "=====online end=====" << endl;
+     online_end = timer.setTimePoint("online_end");
++    phase.online_ms =
++        std::chrono::duration<double, std::milli>(online_end - online_start).count();
++    phase.online_bytes_sent = chl.bytesSent() - phase.setup_bytes_sent;
++    phase.online_bytes_recv = chl.bytesReceived() - phase.setup_bytes_recv;
++    const uint64_t base = role == Role::Sender ? sender->baseOtCount() : recver->baseOtCount();
++    phase.n_ot = base + static_cast<uint64_t>(size) +
++                 static_cast<uint64_t>(n) * (log2(p) + 1);
+ 
+ }
+ 
+--- a/n1not.h
++++ b/n1not.h
+@@ -105,7 +105,7 @@ private:
+         AES aes(temp);
+         block res, pt = AllOneBlock;
+ 
+-        aes.ecbEncBlocksInline<1>(&AllOneBlock, &res);
++        aes.ecbEncBlocks<1>(&AllOneBlock, &res);
+         memcpy(out, &res, 2*sizeof(T));
+     }
+ 

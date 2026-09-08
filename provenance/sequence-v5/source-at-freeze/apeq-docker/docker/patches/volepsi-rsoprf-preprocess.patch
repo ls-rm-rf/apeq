@@ -1,0 +1,85 @@
+diff --git a/volePSI/RsOprf.cpp b/volePSI/RsOprf.cpp
+index a3ef9de..2a6db5b 100644
+--- a/volePSI/RsOprf.cpp
++++ b/volePSI/RsOprf.cpp
+@@ -21,7 +21,8 @@ namespace volePSI
+ 
+ 		mPaxos.init(n, mBinSize, 3, mSsp, PaxosParam::GF128, oc::ZeroBlock);
+ 
+-		mD = prng.get();
++		if (!mVolePreprocessed)
++			mD = prng.get();
+ 
+ 		if (mMalicious)
+ 		{
+@@ -37,14 +38,19 @@ namespace volePSI
+ 		numThreads = std::max<u64>(1, numThreads);
+ 		//mVoleSender.mNumThreads = numThreads;
+ 		// a + b  = c * d
+-		fork = chl.fork();
+-		fu = genVole(prng, fork, reducedRounds)
+-			| macoro::make_eager();
++		if (!mVolePreprocessed)
++		{
++			fork = chl.fork();
++			fu = genVole(prng, fork, reducedRounds)
++				| macoro::make_eager();
++		}
+ 
+ 		co_await(chl.recv(mPaxos.mSeed));
+ 		setTimePoint("RsOprfSender::recv-seed");
+-		co_await(fu);
++		if (!mVolePreprocessed)
++			co_await(fu);
+ 		mB = mVoleSender.mB;
++		mVolePreprocessed = false;
+ 		setTimePoint("RsOprfSender::send-vole");
+ 
+ 
+@@ -302,9 +308,12 @@ namespace volePSI
+ 		if (mTimer)
+ 			mVoleRecver.setTimer(*mTimer);
+ 
+-		fork = chl.fork();
+-		fu = genVole(paxos.size(), prng, fork, reducedRounds)
+-			| macoro::make_eager();
++		if (!mVolePreprocessed)
++		{
++			fork = chl.fork();
++			fu = genVole(paxos.size(), prng, fork, reducedRounds)
++				| macoro::make_eager();
++		}
+ 
+ 
+ 
+@@ -323,7 +332,9 @@ namespace volePSI
+ 
+ 		paxos.solve<block>(values, h, p, nullptr, numThreads);
+ 		setTimePoint("RsOprfReceiver::receive-solve");
+-		co_await(fu);
++		if (!mVolePreprocessed)
++			co_await(fu);
++		mVolePreprocessed = false;
+ 
+ 		// a + b  = c * d
+ 		a = mVoleRecver.mA;
+diff --git a/volePSI/RsOprf.h b/volePSI/RsOprf.h
+index 14e9682..c5462b4 100644
+--- a/volePSI/RsOprf.h
++++ b/volePSI/RsOprf.h
+@@ -27,6 +27,7 @@ namespace volePSI
+         u64 mBinSize = 1 << 14;
+         u64 mSsp = 40;
+         bool mDebug = false;
++        bool mVolePreprocessed = false;
+ 
+         void setMultType(oc::MultType type) { mVoleSender.mMultType = type; };
+ 
+@@ -53,6 +54,7 @@ namespace volePSI
+         u64 mBinSize = 1 << 14;
+         u64 mSsp = 40;
+         bool mDebug = false;
++        bool mVolePreprocessed = false;
+ 
+         void setMultType(oc::MultType type) { mVoleRecver.mMultType = type; };
+ 

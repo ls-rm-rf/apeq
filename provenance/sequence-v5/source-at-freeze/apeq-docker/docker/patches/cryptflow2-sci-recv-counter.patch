@@ -1,0 +1,35 @@
+diff --git a/SCI/src/utils/io_pack.h b/SCI/src/utils/io_pack.h
+index 1c35c1a..72a7b95 100644
+--- a/SCI/src/utils/io_pack.h
++++ b/SCI/src/utils/io_pack.h
+@@ -34,6 +34,10 @@ public:
+ 
+   uint64_t get_comm() { return io->counter + io_rev->counter + io_GC->counter; }
+ 
++  uint64_t get_recv_comm() {
++    return io->recv_counter + io_rev->recv_counter + io_GC->recv_counter;
++  }
++
+   ~IOPack() {
+     delete io;
+     delete io_rev;
+diff --git a/SCI/src/utils/net_io_channel.h b/SCI/src/utils/net_io_channel.h
+index 0a20db0..73ca80a 100644
+--- a/SCI/src/utils/net_io_channel.h
++++ b/SCI/src/utils/net_io_channel.h
+@@ -58,6 +58,7 @@ public:
+   string addr;
+   int port;
+   uint64_t counter = 0;
++  uint64_t recv_counter = 0;
+   uint64_t num_rounds = 0;
+   bool FBF_mode;
+   LastCall last_call = LastCall::None;
+@@ -187,6 +188,7 @@ public:
+     if (has_sent)
+       fflush(stream);
+     has_sent = false;
++    recv_counter += len;
+     int sent = 0;
+     while (sent < len) {
+       int res = fread(sent + (char *)data, 1, len - sent, stream);

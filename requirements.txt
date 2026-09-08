@@ -1,0 +1,5 @@
+# Python analysis and plotting dependencies; cryptographic dependencies are pinned in Dockerfiles.
+numpy
+scipy
+matplotlib
+reportlab
