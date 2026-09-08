@@ -1,0 +1,21 @@
+FROM apeq/volepsi:latest
+
+WORKDIR /opt/ips-ole
+COPY . .
+
+ARG VOLEPSI_REF=ed943f5f814591cdf864777c73b7bc9e7526c1a8
+RUN test "$(git -C /opt/volepsi rev-parse HEAD)" = "${VOLEPSI_REF}" \
+    && cmake -S . -B build-libote \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DFP_CHECKED=ON \
+      -DIPS_OLE_BUILD_LIBOTE_ADAPTER=ON \
+      -DCMAKE_PREFIX_PATH=/opt/volepsi-install \
+    && cmake --build build-libote --parallel 4 \
+    && ctest --test-dir build-libote --output-on-failure
+
+ARG IPS_OLE_REVISION=unknown
+LABEL org.opencontainers.image.title="APEQ IPS-OLE libOTe Retriever verification"
+LABEL org.opencontainers.image.revision="${IPS_OLE_REVISION}"
+
+ENTRYPOINT []
+CMD ["ctest", "--test-dir", "build-libote", "--output-on-failure"]
